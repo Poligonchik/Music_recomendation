@@ -1,0 +1,20 @@
+
+C4Component
+    title Система рекомендаций треков в Яндекс Музыке
+
+    UpdateLayoutConfig("2")
+
+    Container(api, "Сервис рекомендаций", "Python", "Выбирает следующий трек")
+    Container(train, "Обучение модели", "Python", "Обновляет модель")
+
+    Container_Boundary(ml, "ML-сервис") {
+        Component(input, "Получение данных", "Python", "Принимает треки, признаки")
+        Component(model, "ML-модель", "Python", "Оценка треков")
+        Component(output, "Отправка результата", "Python", "Возвращает оценки")
+    }
+
+    Rel_D(api, input, "Передает </br> треки и признаки")
+    Rel_D(input, model, "Передает </br> данные")
+    Rel_D(model, output, "Передает оценки")
+    Rel_U(output, api, "Возвращает оценки")
+    Rel_D(train, model, "Передает </br>новую модель")
